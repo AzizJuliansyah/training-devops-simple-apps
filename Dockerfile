@@ -1,5 +1,5 @@
 # Images yang digunakan sebagai base image dengan os alpine
-FROM node:18-alpine as build
+FROM node:18-alpine AS build
 
 # Set working directory di dalam container
 WORKDIR /app
@@ -12,7 +12,7 @@ RUN npm install
 
 
 # Copy semua file dari host ke working directory di dalam container
-FROM node:18-alpine as production
+FROM node:18-alpine
 
 # Set working directory di dalam container
 WORKDIR /app
