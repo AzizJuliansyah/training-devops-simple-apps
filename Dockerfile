@@ -1,5 +1,5 @@
 # Images yang digunakan sebagai base image dengan os alpine
-FROM node:18-alpine
+FROM node:18-alpine as build
 
 # Set working directory di dalam container
 WORKDIR /app
@@ -10,8 +10,21 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
+
 # Copy semua file dari host ke working directory di dalam container
-COPY . .
+FROM node:18-alpine as production
+
+# Set working directory di dalam container
+WORKDIR /app
+
+# Copy hanya node_modules dari tahap build
+COPY --from=build /app/node_modules ./node_modules
+
+# Copy file package.json ke working directory
+COPY package*.json ./
+
+# Copy semua file dari host ke working directory di dalam container
+COPY app/. .
 
 # Expose port yang akan digunakan oleh aplikasi
 EXPOSE 3000
