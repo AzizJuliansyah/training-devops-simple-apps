@@ -20,7 +20,7 @@ pipeline {
         stage('Testing') {
             steps {
                 sh'''
-                cd app/.env .
+                cp app/.env .
                 APP_PORT=3001 npm test
                 APP_PORT=3001 npm run test:coverage
                 '''
